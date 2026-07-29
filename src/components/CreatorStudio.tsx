@@ -389,6 +389,79 @@ export const CreatorStudio: React.FC<CreatorStudioProps> = ({
               </div>
 
               <div>
+                <label className="text-slate-400 block mb-1">
+                  Upload Asset Preview / File (Computer, Phone, or Camera)
+                </label>
+                <div className="p-3 bg-slate-950 border border-slate-800 rounded-xl space-y-2">
+                  <div className="flex flex-col sm:flex-row items-center gap-2">
+                    <label className="flex-1 w-full flex items-center justify-center gap-2 py-2 px-3 rounded-lg bg-sky-500/10 hover:bg-sky-500/20 text-sky-300 border border-sky-500/30 text-xs font-bold transition-all cursor-pointer">
+                      <Upload className="w-3.5 h-3.5" />
+                      <span>Choose File from Computer or Phone</span>
+                      <input
+                        type="file"
+                        accept="*"
+                        className="hidden"
+                        onChange={(e) => {
+                          if (e.target.files && e.target.files[0]) {
+                            const file = e.target.files[0];
+                            const sizeMb = (file.size / (1024 * 1024)).toFixed(1);
+                            setFileSize(`${sizeMb} MB`);
+                            setFileFormat(file.name.split('.').pop()?.toUpperCase() || 'FILE');
+                            if (file.type.startsWith('image/')) {
+                              const reader = new FileReader();
+                              reader.onload = (ev) => {
+                                setPreviewUrl(ev.target?.result as string);
+                              };
+                              reader.readAsDataURL(file);
+                            }
+                          }
+                        }}
+                      />
+                    </label>
+
+                    <label className="flex-1 w-full flex items-center justify-center gap-2 py-2 px-3 rounded-lg bg-purple-500/10 hover:bg-purple-500/20 text-purple-300 border border-purple-500/30 text-xs font-bold transition-all cursor-pointer">
+                      <Sparkles className="w-3.5 h-3.5" />
+                      <span>Capture with Phone Camera</span>
+                      <input
+                        type="file"
+                        accept="image/*"
+                        capture="environment"
+                        className="hidden"
+                        onChange={(e) => {
+                          if (e.target.files && e.target.files[0]) {
+                            const file = e.target.files[0];
+                            const reader = new FileReader();
+                            reader.onload = (ev) => {
+                              setPreviewUrl(ev.target?.result as string);
+                            };
+                            reader.readAsDataURL(file);
+                          }
+                        }}
+                      />
+                    </label>
+                  </div>
+
+                  {previewUrl && (
+                    <div className="flex items-center gap-3 pt-1">
+                      <img
+                        src={previewUrl}
+                        alt="Preview"
+                        className="w-12 h-12 rounded-lg object-cover border border-slate-800"
+                      />
+                      <div className="min-w-0 flex-1">
+                        <span className="text-[11px] text-slate-300 block truncate font-mono">
+                          Image Data / Preview URL Loaded
+                        </span>
+                        <span className="text-[10px] text-emerald-400 font-mono font-bold">
+                          Format: {fileFormat} • Size: {fileSize}
+                        </span>
+                      </div>
+                    </div>
+                  )}
+                </div>
+              </div>
+
+              <div>
                 <label className="text-slate-400 block mb-1">Description & Licensing Terms</label>
                 <textarea
                   rows={3}

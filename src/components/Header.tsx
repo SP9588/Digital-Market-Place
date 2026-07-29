@@ -37,6 +37,7 @@ import {
   ArrowRightLeft,
   Sun,
   Moon,
+  Upload,
 } from 'lucide-react';
 import { CategoryId, Currency } from '../types/marketplace';
 import { ALL_CATEGORIES } from '../data/categories';
@@ -63,6 +64,7 @@ interface HeaderProps {
   onNavigate: (view: 'marketplace' | 'creator' | 'library' | 'governance' | 'wishlist') => void;
   theme?: 'dark' | 'light';
   onToggleTheme?: () => void;
+  onOpenUploadData?: () => void;
 }
 
 const CATEGORY_ICON_MAP: Record<string, React.ElementType> = {
@@ -113,6 +115,7 @@ export const Header: React.FC<HeaderProps> = ({
   onNavigate,
   theme = 'dark',
   onToggleTheme,
+  onOpenUploadData,
 }) => {
   const [isMegaMenuOpen, setIsMegaMenuOpen] = useState(false);
   const [hoveredCat, setHoveredCat] = useState<CategoryId | null>('books');
@@ -337,6 +340,18 @@ export const Header: React.FC<HeaderProps> = ({
                     <span className="hidden xl:inline text-[11px]">Dark Mode</span>
                   </>
                 )}
+              </button>
+            )}
+
+            {/* Upload Data Button */}
+            {onOpenUploadData && (
+              <button
+                onClick={onOpenUploadData}
+                className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-sky-500/10 hover:bg-sky-500/20 text-sky-300 border border-sky-500/30 hover:border-sky-400 text-xs font-semibold transition-all cursor-pointer shadow-sm"
+                title="Upload data or assets from Computer or Mobile Phone"
+              >
+                <Upload className="w-3.5 h-3.5 text-sky-400" />
+                <span className="hidden md:inline">Upload Data</span>
               </button>
             )}
 

@@ -35,6 +35,7 @@ import { ProductComparisonModal } from './components/ProductComparisonModal';
 import { ProductCompareFloatingBar } from './components/ProductCompareFloatingBar';
 import { CartToast, CartToastData } from './components/CartToast';
 import { RecentlyViewedSection } from './components/RecentlyViewedSection';
+import { UploadDataModal } from './components/UploadDataModal';
 import { CartDrawer } from './components/CartDrawer';
 import {
   Compass,
@@ -136,6 +137,7 @@ export default function App() {
   const [isAiAssistantOpen, setIsAiAssistantOpen] = useState(false);
   const [isPriceAlertsModalOpen, setIsPriceAlertsModalOpen] = useState(false);
   const [isPaymentHistoryOpen, setIsPaymentHistoryOpen] = useState(false);
+  const [isUploadDataOpen, setIsUploadDataOpen] = useState(false);
 
   // Product Comparison State
   const [comparedProductIds, setComparedProductIds] = useState<string[]>(() => {
@@ -692,6 +694,7 @@ export default function App() {
         onNavigate={setActiveView}
         theme={theme}
         onToggleTheme={handleToggleTheme}
+        onOpenUploadData={() => setIsUploadDataOpen(true)}
       />
 
       {/* Main Container */}
@@ -995,6 +998,18 @@ export default function App() {
           onSelectProduct={(p) => handleSelectProduct(p)}
         />
       )}
+
+      {/* Upload Data Modal */}
+      <UploadDataModal
+        isOpen={isUploadDataOpen}
+        onClose={() => setIsUploadDataOpen(false)}
+        onImportBulkProducts={(newProds) => {
+          setProducts((prev) => [...newProds, ...prev]);
+        }}
+        onAddSingleProduct={(newProd) => {
+          setProducts((prev) => [newProd, ...prev]);
+        }}
+      />
 
       {/* Price Drop Alerts Modal */}
       <PriceAlertsModal
