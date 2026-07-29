@@ -1,0 +1,6 @@
+{
+  "name": "Open Ocean",
+  "description": "Global Digital Products Marketplace for books, education, music, audio, video, graphics, software, AI products, 3D assets, and digital licenses.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
